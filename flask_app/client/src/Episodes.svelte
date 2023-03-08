@@ -1,7 +1,7 @@
 <script>
     import AP from "./AudioPlayer.svelte";
     async function getPodcasts() {
-        const response = await fetch("http://localhost:5000/api/episodes");
+        const response = await fetch("/api/episodes");
         const data = await response.json();
         if (response.ok){
             return data;

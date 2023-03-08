@@ -3,7 +3,7 @@
     import { Link } from "svelte-navigator";
     import AP from "./AudioPlayer.svelte";
     async function getLatest() {
-        const response = await fetch("http://localhost:5000/api/episodes/latest")
+        const response = await fetch("/api/episodes/latest")
         const data = await response.json();
         if (response.ok){
             const title = data.title.split(":")

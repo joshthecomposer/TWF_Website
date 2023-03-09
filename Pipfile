@@ -9,6 +9,7 @@ pymysql = "*"
 feedparser = "*"
 flask-cors = "*"
 pyopenssl = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

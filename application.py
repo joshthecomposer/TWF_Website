@@ -1,5 +1,5 @@
 from flask_app import application
-from flask_app.controllers import controller
+from flask_app.controllers import controller, admin_controller
 from dotenv import load_dotenv
 load_dotenv()
 

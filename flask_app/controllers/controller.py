@@ -1,4 +1,4 @@
-from flask import jsonify, send_from_directory
+from flask import jsonify, send_from_directory, render_template
 from flask_app import application as app
 import feedparser
 
@@ -18,7 +18,6 @@ def directory(path):
 def latest():
     e = EPISODES.entries[0]
     print(e.title)
-    # e.links[0].href
     return jsonify(e)
 
 @app.route("/api/episodes", methods = ["GET"])

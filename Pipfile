@@ -10,6 +10,7 @@ feedparser = "*"
 flask-cors = "*"
 pyopenssl = "*"
 python-dotenv = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 

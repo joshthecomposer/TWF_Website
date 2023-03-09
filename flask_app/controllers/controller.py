@@ -17,7 +17,6 @@ def directory(path):
 @app.route("/api/episodes/latest", methods=["GET"])
 def latest():
     e = EPISODES.entries[0]
-    print(e.title)
     return jsonify(e)
 
 @app.route("/api/episodes", methods = ["GET"])

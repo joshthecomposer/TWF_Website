@@ -4,6 +4,7 @@
 	import Player from "./Episodes.svelte";
 	import About from "./About.svelte";
 	import Home from "./Home.svelte";
+	import Blogs from "./Blogs.svelte";
 </script>
 
 <Router primary={false}>
@@ -25,8 +26,8 @@
 		<Route path="merch">
 			<h1>Merch</h1>
 		</Route>
-		<Route path="blog">
-			<h1>Blog</h1>
+		<Route path="blogs">
+			<Blogs />
 		</Route>
 		<Route path="subscribe">
 			<h1>Subcsribe</h1>

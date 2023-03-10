@@ -17,17 +17,38 @@ class Admin:
         self.password = data["password"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
-    
+
     @classmethod
     def create(cls, data):
         query = "INSERT INTO admins (first_name, last_name, email, password) VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s);"
         return connectToMySQL(DB).query_db(query, data)
-    
+
     @classmethod
     def email_exists(cls, data):
         query = "SELECT email FROM admins WHERE email = %(email)s"
         result = connectToMySQL(DB).query_db(query, data)
         return True if len(result) > 0 else False 
+
+    @classmethod
+    def get_one_by_email(cls, data):
+        query = "SELECT * FROM admins WHERE email = %(email)s"
+        result = connectToMySQL(DB).query_db(query, data)
+        if len(result) < 1:
+            return False
+        admin = Admin(result[0])
+        return admin
+
+    @staticmethod
+    def has_tokens():
+        d = str(dt.now() + timedelta(days = 14)).split(".")[0]
+        query = f'SELECT * FROM admin_tokens WHERE created_at < "{d}";'
+        result = connectToMySQL(DB).query_db(query)
+        return True if len(result) > 0 else False
+
+    @staticmethod
+    def destroy_token(data):
+        query = "DELETE FROM admin_tokens WHERE token = %(token)s;"
+        return connectToMySQL(DB).query_db(query, data)
 
     @staticmethod
     def session_check():
@@ -38,7 +59,7 @@ class Admin:
     @staticmethod
     def validate_admin_token(data):
         is_valid = False
-        d = dt.now() - timedelta(days = 14)
+        d = dt.now() + timedelta(days = 14)
         query = "SELECT * FROM admin_tokens WHERE token = %(token)s;"
         result = connectToMySQL(DB).query_db(query, data)
         if (len(result)>0):

@@ -14,5 +14,17 @@ class Blog:
     
     @classmethod
     def create(cls, data):
-        query = "INSERT INTO blogs (admin_id, title, author, content) VALUES (%(admin_id)s,%(title)s,%(author)s,%(content)s,)"
+        query = "INSERT INTO blogs (admin_id, title, author, content) VALUES (%(admin_id)s,%(title)s,%(author)s,%(content)s);"
         return connectToMySQL(DB).query_db(query, data)
+    
+    @classmethod
+    def get_all(cls):
+        query = "SELECT * FROM blogs;"
+        result = connectToMySQL(DB).query_db(query)
+        if len(result) < 1:
+            return []
+        blogs = []
+        for r in result:
+            one = cls(r)
+            blogs.append(one)
+        return blogs

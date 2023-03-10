@@ -1,18 +1,35 @@
 from flask import jsonify, send_from_directory, render_template, session, redirect, request, flash
 from flask_app import application as app
 from flask_app.models.admin import Admin
+from flask_app.models.blog import Blog
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 @app.route("/admin/reg", methods=["GET"])
-def login_reg():
-    return render_template("login_reg.html")
+def reg():
+    if (not Admin.has_tokens()):
+        return redirect("/admin/login")
+    return render_template("reg.html")
 
-@app.route("/admin", methods=["GET"])
-def admin_index():
-    if (not Admin.session_check()):
-        return redirect("/")
-    return redirect("/admin/dashboard")
+@app.route("/admin/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    if request.method == "POST":
+        data = {
+            "email":request.form["email"],
+            "password":request.form["password"]
+        }
+        admin_exists = Admin.get_one_by_email(data)
+        print(admin_exists)
+        if not admin_exists:
+            flash("Email/password invalid")
+            return redirect("/admin/login")
+        if not bcrypt.check_password_hash(admin_exists.password, data["password"]):
+            flash("Email/password invalid")
+            return redirect("/admin/login")
+        session["admin"] = admin_exists.id
+        return redirect("/admin/blogs")
 
 @app.route("/admin/blogs", methods=["GET"])
 def blog():
@@ -30,13 +47,20 @@ def dashboard():
 def all_blogs():
     if (not Admin.session_check()):
         return redirect("/")
-    return render_template("all_blogs.html")
+    all_blogs = Blog.get_all()
+    return render_template("all_blogs.html", all_blogs=all_blogs)
 
 @app.route("/admin/blogs/create", methods=["POST"])
 def create_blog():
     if(not Admin.session_check()):
         return redirect("/")
-    # do things
+    data = {
+        "admin_id" : session["admin"],
+        "title" : request.form["title"],
+        "author" : request.form["author"],
+        "content" : str(request.form["content"])
+    }
+    Blog.create(data)
     return redirect("/admin/blogs/all")
 
 @app.route("/admin/tokens/generate")
@@ -68,7 +92,11 @@ def create():
             "password":pw_hash
         }
         Admin.create(data)
-    return redirect("/admin/dashboard")
+        data = {
+            "token":request.form["token"]
+        }
+        Admin.destroy_token(data)
+    return redirect("/admin/login")
 
 @app.route("/admin/logout")
 def logout():

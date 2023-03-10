@@ -3,6 +3,11 @@
 {%include "header.html"%}
 {%include "nav.html"%}
 <body>
-    
+    {%for b in all_blogs%}
+    <div class="container shadow my-3 rounded col-9">
+            <h1>{{b.title}}</h1>
+            <p style="white-space: pre-line">{{b.content}}</p>
+        </div>
+    {%endfor%}
 </body>
 </html>

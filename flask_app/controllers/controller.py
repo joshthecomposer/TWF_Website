@@ -1,5 +1,6 @@
 from flask import jsonify, send_from_directory, render_template
 from flask_app import application as app
+from flask_app.models.blog import Blog
 import feedparser
 
 EPISODES = feedparser.parse("https://feeds.redcircle.com/7404a6c6-18b8-4f30-a819-468fb013bff2?fbclid=IwAR2jIZ2aJUjpEZL7tOHNtHr8R6OhgfKSQl7Op5OT8MwAuLT2dCxL38y1uqs")
@@ -22,3 +23,8 @@ def latest():
 @app.route("/api/episodes", methods = ["GET"])
 def all_episodes():
     return jsonify(EPISODES.entries)
+
+@app.route("/api/blogs", methods=["GET"])
+def api_all_blogs():
+    all_blogs = Blog.get_all()
+    return jsonify(all_blogs)

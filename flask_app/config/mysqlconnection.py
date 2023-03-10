@@ -2,10 +2,10 @@ import pymysql.cursors
 from flask_app import application as app
 class MySQLConnection:
     def __init__(self, db):
-        connection = pymysql.connect(host = app.config("DB_HOST"),
-                                    user = app.config("DB_USER"),
-                                    password = app.config("DB_PASS"),
-                                    port = app.config("DB_PORT"),
+        connection = pymysql.connect(host = app.config["DB_HOST"],
+                                    user = app.config["DB_USER"],
+                                    password = app.config["DB_PASS"],
+                                    port = int(app.config["DB_PORT"]),
                                     db = db,
                                     charset = 'utf8mb4',
                                     cursorclass = pymysql.cursors.DictCursor,

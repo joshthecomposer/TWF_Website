@@ -45,7 +45,7 @@
             <Link to="/"><img class="main-logo nav-link" src="img/BIGGGG-01.png" alt="Tolkien with Friends"></Link>
         </li>
         <li>
-            <Link class="nav-link" to="blog"></Link>
+            <Link class="nav-link" to="blog">Blogs</Link>
         </li>
         <li>
             <Link class="nav-link" to="subscribe">Subscribe</Link>

@@ -8,6 +8,11 @@ EPISODES = feedparser.parse("https://feeds.redcircle.com/7404a6c6-18b8-4f30-a819
 
 # Path for our main Svelte page
 @app.route("/")
+@app.route("/blogs")
+@app.route("/episodes")
+@app.route("/about")
+@app.route("/subscribe")
+@app.route("/contact")
 def base():
     return send_from_directory('./client/public', 'index.html')
 

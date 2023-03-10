@@ -32,5 +32,17 @@ def all_episodes():
 
 @app.route("/api/blogs", methods=["GET"])
 def api_all_blogs():
-    all_blogs = Blog.get_all()
-    return jsonify(all_blogs)
+    all_blogs = Blog.get_all_released()
+    d = []
+    for b in all_blogs:
+        bd = {}
+        bd["title"] = b.title
+        bd["author"] = b.author
+        bd["updated_at"] = b.updated_at
+        d.append(bd)
+        bd["blocks"] = []
+        for c in b.blocks:
+            cd = {}
+            cd["text"] = c.text
+            bd["blocks"].append(cd)
+    return jsonify(d)

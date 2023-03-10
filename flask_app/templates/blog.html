@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
 {%include "header.html"%}
 {%include "nav.html"%}
 <body>
     <div class="container col-md-6 col-sm-12 my-5 shadow rounded p-3">
-        <h1>Make a new Blog Post</h1>
+        <h1>Start a Blog Post</h1>
         <form action="/admin/blogs/create" method="post">
             <div class="form-group">
                 <label for="title">Title</label>
@@ -14,10 +12,7 @@
                 <label for="author">Author</label>
                 <input type="text" class="form-control" name="author">
             </div>
-            <div class="form-group">
-                <label for="content">Content</label>
-                <textarea class="form-control" name="content" id="" cols="30" rows="10"></textarea>
-            </div>
+            <p class="text-muted my-3">Submit to begin adding content and media</p>
             <button type="submit" class="btn btn-outline-primary col-12">Submit</button>
         </form>
     </div>

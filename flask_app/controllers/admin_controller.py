@@ -31,37 +31,11 @@ def login():
         session["admin"] = admin_exists.id
         return redirect("/admin/blogs")
 
-@app.route("/admin/blogs", methods=["GET"])
-def blog():
-    if (not Admin.session_check()):
-        return redirect("/")
-    return render_template("blog.html")
-
 @app.route("/admin/dashboard", methods=["GET"])
 def dashboard():
     if (not Admin.session_check()):
         return redirect("/")
     return render_template("dashboard.html")
-
-@app.route("/admin/blogs/all", methods=["GET"])
-def all_blogs():
-    if (not Admin.session_check()):
-        return redirect("/")
-    all_blogs = Blog.get_all()
-    return render_template("all_blogs.html", all_blogs=all_blogs)
-
-@app.route("/admin/blogs/create", methods=["POST"])
-def create_blog():
-    if(not Admin.session_check()):
-        return redirect("/")
-    data = {
-        "admin_id" : session["admin"],
-        "title" : request.form["title"],
-        "author" : request.form["author"],
-        "content" : str(request.form["content"])
-    }
-    Blog.create(data)
-    return redirect("/admin/blogs/all")
 
 @app.route("/admin/tokens/generate")
 def generate_token():
